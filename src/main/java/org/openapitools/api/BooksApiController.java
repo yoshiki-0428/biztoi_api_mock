@@ -35,19 +35,33 @@ public class BooksApiController implements BooksApi {
     static LocalDateTime date = LocalDateTime.now();
 
     private Book getStubBook() {
+        Map<Integer, String> titleMap = new HashMap<Integer, String>() {
+            {
+                put(1, "偉大なキャリアの作り方　～７つの習慣　実践編～");
+                put(2, "おすすめ”生命保険には入るな!");
+                put(3, "GWにおすすめ! グルメな海外旅行ベスト5");
+                put(4, "大人の旅じたく　心地よく、自分らしく旅をする");
+                put(5, "自己啓発の名著から学ぶ 世界一カンタンな人生の変え方");
+                put(6, "成功法則大全");
+                put(6, "ゼロから幸せをつかむオトナの恋愛処方箋");
+                put(8, "本のタイトル本のタイトル本のタイトル本のタイトル本のタイトル本のタイトル本のタイトル");
+            }
+        };
         return new Book()
                 .id(UUID.randomUUID().toString())
-                .title("Title")
-                .detail("detail")
+                .title(titleMap.get(random.nextInt(8) + 1))
+                .detail("本の詳細本の詳細")
                 .pictureUrl("https://picsum.photos/200/30" + random.nextInt(9) + ".jpg")
                 .linkUrl("https://picsum.photos")
+                .author(random.nextBoolean() ? random.nextBoolean() ? Arrays.asList("カテゴリー") : Arrays.asList("作者名", "作者名2") : null)
+                .category(random.nextBoolean() ? random.nextBoolean() ? Arrays.asList("カテゴリー") : Arrays.asList("カテゴリー", "カテゴリー2") : null)
                 .favorite(random.nextBoolean());
     }
 
     private Answer getStubAnswer(String orderId, String answerType, String questionId) {
         return new Answer()
                 .id(UUID.randomUUID().toString())
-                .answer("Answer")
+                .answer(random.nextBoolean() ? "チームで力を発揮する" : "朝礼後にチームメンバーを集めて共通目標の有用性について説明する。\n3日後までに目標を考えてくるようお願いする、\n3日後の朝礼後に再度集まり30分間チームメンバーで目標案を検討し決定する")
                 .answerHeadId(UUID.randomUUID().toString())
                 .questionId(questionId)
                 .orderId(orderId)
@@ -155,7 +169,7 @@ public class BooksApiController implements BooksApi {
                 put("00000-00000-33333", getStubQuestion("00000-00000-33333", "00000-00000-44444", "この本を読んで得られた知識を書き出してみましょう", "GIST", 3, 2, "チームで共通の目標を持つ"));
                 put("00000-00000-44444", getStubQuestion("00000-00000-44444", "00000-00000-55555", "「この本から得た知識」×「自らの経験・知識」から「気付き」があれば書いてみよう！", "GIST", 4, 2, "前に読んだ本と内容が似ているが、結論が違うので、自分なりに行動をして実際に確かめてみる"));
                 put("00000-00000-55555", getStubQuestion("00000-00000-55555", "00000-00000-66666", "本から得た知識を使って、どのような行動ができそうか？(すぐに書けない時は5W1Hで考えてみよう！)", "ACTION_PLAN", 5, 3, "チームで話し合って共通の目標を作る"));
-                put("00000-00000-66666", getStubQuestion("00000-00000-66666", null, "行動プランを「自分の環境」でのやり方として、具体的に書いてみよう！", "ACTION_PLAN", 5, 3,
+                put("00000-00000-66666", getStubQuestion("00000-00000-66666", null, "行動プランを「自分の環境」でのやり方として、具体的に書いてみよう！", "ACTION_PLAN", 6, 3,
                         "朝礼後にチームメンバーを集めて共通目標の有用性について説明する。\n" +
                         "3日後までに目標を考えてくるようお願いする。\n" +
                         "3日後の朝礼後に再度集まり30分間チームメンバーで目標案を検討し決定する"));
@@ -175,12 +189,10 @@ public class BooksApiController implements BooksApi {
                 new Toi()
                         .userId(UUID.randomUUID().toString())
                         .publishFlg(true)
-                        .inserted("")
                         .bookId(bookId)
                         .title("行動プランを作ってみる")
                         .detail("早速回答をしてみましょう。")
                         .inserted(date.toString())
-                        .modified(date.plusDays(5).toString())
         );
     }
 
