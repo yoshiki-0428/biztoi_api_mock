@@ -140,21 +140,25 @@ public class BooksApiController implements BooksApi {
         return ResponseEntity.ok(this.getStubQuestionMap().get(questionId));
     }
 
-    private Question getStubQuestion(String id, String nextId, String title, String answerType, int orderId, int step) {
+    private Question getStubQuestion(String id, String nextId, String title, String answerType, int orderId, int step, String example) {
         return new Question()
                 .id(id).toiId(UUID.randomUUID().toString()).nextQuestionId(nextId)
-                .title(title).answerType(answerType)
+                .title(title).answerType(answerType).example(example).required(true)
                 .orderId(BigDecimal.valueOf(orderId)).step(BigDecimal.valueOf(step));
     }
 
     private Map<String, Question> getStubQuestionMap() {
         Map<String, Question> map = new HashMap<String, Question>() {
             {
-                put("00000-00000-11111", getStubQuestion("00000-00000-11111", "00000-00000-22222", "この本を読んだ目的を設定してみましょう", "OBJECTIVE", 1, 1));
-                put("00000-00000-22222", getStubQuestion("00000-00000-22222", "00000-00000-33333", "この本を読んで1番目に得られた知識を書き出してみましょう", "GIST", 2, 2));
-                put("00000-00000-33333", getStubQuestion("00000-00000-33333", "00000-00000-44444", "この本を読んで2番目に得られた知識を書き出してみましょう", "GIST", 3, 2));
-                put("00000-00000-44444", getStubQuestion("00000-00000-44444", "00000-00000-55555", "この本を読んで3番目に得られた知識を書き出してみましょう", "GIST", 4, 2));
-                put("00000-00000-55555", getStubQuestion("00000-00000-55555", null, "この本を読んであなたの行動プランを設定するとしたら何を設定しますか", "ACTION_PLAN", 5, 3));
+                put("00000-00000-11111", getStubQuestion("00000-00000-11111", "00000-00000-22222", "この本を読んだ目的を設定してみましょう", "OBJECTIVE", 1, 1, "リーダーシップを身につけたい"));
+                put("00000-00000-22222", getStubQuestion("00000-00000-22222", "00000-00000-33333", "目的を達成することでどのようなメリットがありますか？( 悩みの解決・収入UP etc… )", "OBJECTIVE", 2, 2, "チームをまとめる実力を身につけ、会社の幹部へ昇格する, 後輩から慕われる存在になりたい"));
+                put("00000-00000-33333", getStubQuestion("00000-00000-33333", "00000-00000-44444", "この本を読んで得られた知識を書き出してみましょう", "GIST", 3, 2, "チームで共通の目標を持つ"));
+                put("00000-00000-44444", getStubQuestion("00000-00000-44444", "00000-00000-55555", "「この本から得た知識」×「自らの経験・知識」から「気付き」があれば書いてみよう！", "GIST", 4, 2, "前に読んだ本と内容が似ているが、結論が違うので、自分なりに行動をして実際に確かめてみる"));
+                put("00000-00000-55555", getStubQuestion("00000-00000-55555", "00000-00000-66666", "本から得た知識を使って、どのような行動ができそうか？(すぐに書けない時は5W1Hで考えてみよう！)", "ACTION_PLAN", 5, 3, "チームで話し合って共通の目標を作る"));
+                put("00000-00000-66666", getStubQuestion("00000-00000-66666", null, "行動プランを「自分の環境」でのやり方として、具体的に書いてみよう！", "ACTION_PLAN", 5, 3,
+                        "朝礼後にチームメンバーを集めて共通目標の有用性について説明する。\n" +
+                        "3日後までに目標を考えてくるようお願いする。\n" +
+                        "3日後の朝礼後に再度集まり30分間チームメンバーで目標案を検討し決定する"));
             }
         };
         return map;
